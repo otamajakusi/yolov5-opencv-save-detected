@@ -127,7 +127,6 @@ def main(is_cuda, video, class_list, object_ids, s3_bucket):
     fps = -1
 
     is_save = False
-    fmt = cv2.VideoWriter_fourcc(*"mp4v")
     writer = None
 
     timestamp = datetime.now().strftime("%Y%m%d%H%M")
