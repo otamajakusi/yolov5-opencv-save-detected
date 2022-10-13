@@ -104,6 +104,7 @@ def format_yolov5(frame):
 
 def upload(s3_bucket, file):
     if s3_bucket:
+        print(f"upload s3://{s3_bucket}/{file}")
         s3 = boto3.resource("s3")
         bucket = s3.Bucket(s3_bucket)
         # upload
@@ -201,6 +202,7 @@ def main(is_cuda, video, class_list, object_ids, s3_bucket):
                     os.remove(video_name)
                 is_save = False
                 timestamp = new_timestamp
+                video_name = f"{timestamp}.mp4"
 
         if cv2.waitKey(1) & 0xFF == ord("q"):
             print("finished by user")
