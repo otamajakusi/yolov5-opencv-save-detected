@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Create IAM Users
+
+Parameters:
+  UserName:
+    Type: String
+    Description: username to upload files to s3
+  BucketName:
+    Type: String
+    Description: bucket name to create
+
+Resources:
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref BucketName
+
+  S3UploadUser:
+    Type: AWS::IAM::User
+    Properties:
+      UserName: !Ref UserName
+      Policies:
+      - PolicyName: S3UploadOnly
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - s3:PutObject
+            Resource:
+            - !Sub arn:aws:s3:::${BucketName}/*
+    DependsOn: S3Bucket
